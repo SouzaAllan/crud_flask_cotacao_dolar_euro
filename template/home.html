@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faça sua cotação aqui</title>
+    <style>
+        * {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        }
+
+
+        body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: whitesmoke;
+        color: #333;
+        line-height: 1.6;
+        padding: 20px;
+        }
+
+
+        header {
+        background-color: #007BFF;
+        color: #fff;
+        text-align: center;
+        padding: 10px 0;
+        }
+
+
+        nav {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+        border-radius: 5px;
+        }
+
+
+        form {
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        }
+
+        input[type="text"] {
+        flex: 1;
+        padding: 10px;
+        margin-right: 10px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        }
+
+        input[type="submit"] {
+        background-color: blue;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        }
+
+
+        input[type="submit"]:hover {
+        background-color: green;
+        }
+
+
+
+
+        table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        }
+
+        table, th, td {
+        border: 0px solid #ddd;
+        }
+
+        th, td {
+        padding: 15px;
+        text-align: center;
+        }
+
+        tbody tr:hover {
+        background-color: #f5f5f5;
+        }
+
+
+        </style>
+</head>
+
+<body>
+    <nav>
+            <form action="/process" method="post">
+                <input type="text" id="valor" name="valor" placeholder="insira um valor" required>
+                <input type="hidden" name="info" value="cadastrar">
+                <input type="submit" value="Cadastrar" class="submit-button">
+            </form>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>VALOR EM R$<h1>  </h1></th>
+                            <th>VALOR EM USD<h1>  </h1></th>
+                            <th>VALOR EM EUR<h1>  </h1></th>
+                            <th> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for task in tasks %}
+                        <tr>
+                            <td>R$ {{ task['preco'] }}<h1>  <h1></h1></td>
+                            <td>U$ {{ task['usd'] }}<h1>  <h1></h1></td>
+                            <td>€ {{ task['eur'] }}<h1>  </h1></td>
+                            <td>
+                                <form action="/process" method="post">
+                                  <input type="hidden" name="info" value="deletar">
+                                  <input type="hidden" name="id" value="{{ task['id'] }}">
+                                  <input type="submit" value="Excluir" class="submit-button">
+                                </form>
+                              </td>
+                              <td>
+                                <form action="/update" method="post">
+                                  <input type="hidden" name="info" value="atualizar">
+                                  <input type="hidden" name="id" value="{{ task['id'] }}">
+                                  <input type="hidden" name="preco" value="{{ task['preco'] }}">
+                                  <input type="submit" value="Atualizar" class="submit-button">
+                                </form>
+                              </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </nav> 
+
+</body>
+
+</html>
